@@ -1,12 +1,10 @@
 package com.placelab.aldinrizvo.tests;
 
-import com.placelab.aldinrizvo.utilis.WebDriverSetup;
+import com.placelab.aldinrizvo.utils.WebDriverSetup;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import javax.swing.plaf.InternalFrameUI;
 
 public class SmokeTest {
     private WebDriver driver;

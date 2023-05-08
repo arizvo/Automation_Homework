@@ -1,6 +1,6 @@
 package com.placelab.aldinrizvo.tests;
 
-import com.placelab.aldinrizvo.utilis.WebDriverSetup;
+import com.placelab.aldinrizvo.utils.WebDriverSetup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -18,6 +18,7 @@ public class InvalidEmailLoginTest {
         driver = WebDriverSetup.getWebDriver(browser);
         driver.get("https://demo.placelab.com/");
     }
+
     @Parameters("password")
     @Test
     public void testInvalidEmailLogin(final String password) {
@@ -46,6 +47,7 @@ public class InvalidEmailLoginTest {
 
         // Enter password
         driver.findElement(By.id("password")).sendKeys(password);
+
         // Submit
         driver.findElement(By.xpath("//input[@name='commit']")).click();
 

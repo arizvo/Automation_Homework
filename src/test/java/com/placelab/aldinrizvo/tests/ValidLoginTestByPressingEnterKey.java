@@ -1,6 +1,6 @@
 package com.placelab.aldinrizvo.tests;
 
-import com.placelab.aldinrizvo.utilis.WebDriverSetup;
+import com.placelab.aldinrizvo.utils.WebDriverSetup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -81,6 +81,7 @@ public class ValidLoginTestByPressingEnterKey {
             throw new RuntimeException(e);
         }
     }
+
     @AfterTest
     public void teardown() {
         driver.close();

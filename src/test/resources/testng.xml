@@ -1,9 +1,14 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 
 <suite name="Suite1" verbose="1" >
-    <test name="PlaceLab Smoke Test" >
+    <parameter name="browser" value="chrome"></parameter>
+    <test name="PlaceLab Login test" >
         <classes>
-            <class name="com.placelab.aldinrizvo.tests.SmokeTest" />
+            <class name="com.placelab.aldinrizvo.tests.ValidLoginTest" />
+            <class name="com.placelab.aldinrizvo.tests.InvalidEmailLoginTest" />
+            <class name="com.placelab.aldinrizvo.tests.InvalidPasswordLoginTest" />
+            <class name="com.placelab.aldinrizvo.tests.ValidLoginTestByPressingEnterKey" />
+            <class name="com.placelab.aldinrizvo.tests.RestorePasswordTest" />
         </classes>
     </test>
 </suite>

@@ -1,8 +1,7 @@
 package com.placelab.aldinrizvo.tests;
 
-import com.placelab.aldinrizvo.pages.ForgotPasswordPage;
+import com.placelab.aldinrizvo.pages.Homepage;
 import com.placelab.aldinrizvo.pages.LoginPage;
-import com.placelab.aldinrizvo.pages.RecoveryEmailSentPage;
 import com.placelab.aldinrizvo.utils.WebDriverSetup;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
@@ -10,11 +9,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class RestorePasswordTest {
+public class ValidLoginByPressingEnterKeyTest {
     private WebDriver driver;
     private LoginPage loginPage;
-    private ForgotPasswordPage forgotPasswordPage;
-    private RecoveryEmailSentPage recoveryEmailSentPage;
+    private Homepage homepage;
 
     @Parameters("browser")
     @BeforeMethod(alwaysRun = true, groups = {"Positive", "Negative"})
@@ -22,21 +20,24 @@ public class RestorePasswordTest {
         this.driver = WebDriverSetup.getWebDriver(browser);
         this.driver.get("https://demo.placelab.com/");
         this.loginPage = new LoginPage(driver);
-        this.forgotPasswordPage = new ForgotPasswordPage(driver);
-        this.recoveryEmailSentPage = new RecoveryEmailSentPage(driver);
+        this.homepage = new Homepage(driver);
     }
 
-    @Parameters("email")
-    @Test(priority = 5, groups = {"PasswordRestore", "Positive"})
-    public void testPasswordRestore(final String email) {
+    @Parameters({"email", "password"})
+    @Test(priority = 2, groups = {"ValidLoginEnterKey", "Positive"})
+    public void testValidLoginByEnterKey(final String email, final String password) {
         this.loginPage.validateLoginPageContent();
-        this.loginPage.clickForgotPasswordLink();
+        this.loginPage.enterCredentials(email, password);
+        this.loginPage.SubmitLoginButtonByEnterKey();
 
-        this.forgotPasswordPage.validateForgotPasswordPageContent();
-        this.forgotPasswordPage.enterEmailCredential(email);
-        this.forgotPasswordPage.clickContinueButton();
+        final String expectedRole = "Group Admin";
+        this.homepage.validateUserRole(expectedRole);
 
-        this.recoveryEmailSentPage.validateRecoveryEmailSentPageContent();
+        // Logout
+        this.homepage.signOut();
+
+        // validate that user is signed out
+        this.loginPage.validateLoginPageContent();
     }
 
     @AfterMethod(alwaysRun = true, groups = {"Positive", "Negative"})

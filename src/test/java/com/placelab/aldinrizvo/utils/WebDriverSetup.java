@@ -7,14 +7,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class WebDriverSetup {
     public static WebDriver getWebDriver(final String browserName) {
-        switch (browserName.toLowerCase()) {
-            case "chrome":
-                return getChromeDriver();
-            case "firefox":
-                return getFireFoxDriver();
-            default:
-                throw new IllegalArgumentException("Match case not found for browser: " + browserName);
-        }
+        return switch (browserName.toLowerCase()) {
+            case "chrome" -> getChromeDriver();
+            case "firefox" -> getFireFoxDriver();
+            default -> throw new IllegalArgumentException("Match case not found for browser: " + browserName);
+        };
     }
 
     private static WebDriver getChromeDriver() {

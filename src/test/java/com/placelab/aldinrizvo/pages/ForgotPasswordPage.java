@@ -6,14 +6,14 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 public class ForgotPasswordPage {
-    private final static By FORGOT_PASSWORD_HEADER = By.cssSelector("div#login > p.headline");
-    private final static By LOGIN_FORM = By.id("login_form");
-    private final static By EMAIL_INPUT = By.id("email");
-    private final static By CONTINUE_BUTTON = By.xpath("//input[@type='submit']");
-    private final static String EXPECTED_HEADER_TEXT = "Change your password\nLet's find your account";
-    private final static String EXPECTED_PAGE_TITLE = "PlaceLab";
+    private static final By FORGOT_PASSWORD_HEADER = By.cssSelector("div#login > p.headline");
+    private static final By LOGIN_FORM = By.id("login_form");
+    private static final By EMAIL_INPUT = By.id("email");
+    private static final By CONTINUE_BUTTON = By.xpath("//input[@type='submit']");
+    private static final String EXPECTED_HEADER_TEXT = "Change your password\nLet's find your account";
+    private static final String EXPECTED_PAGE_TITLE = "PlaceLab";
 
-    final private WebDriver driver;
+    private final WebDriver driver;
 
     public ForgotPasswordPage(final WebDriver driver) {
         this.driver = driver;
@@ -30,10 +30,12 @@ public class ForgotPasswordPage {
 
         Assert.assertEquals(actualPageTitle, EXPECTED_PAGE_TITLE);
         Assert.assertTrue(
-                driver.findElement(LOGIN_FORM).isDisplayed(), "Validate login form is displayed."
+                driver.findElement(LOGIN_FORM).isDisplayed(),
+                "Validate login form is displayed."
         );
         Assert.assertTrue(
-                driver.findElement(EMAIL_INPUT).isDisplayed(), "Validate email field is displayed."
+                driver.findElement(EMAIL_INPUT).isDisplayed(),
+                "Validate email field is displayed."
         );
 
         final boolean isContinueButtonDisplayed = driver.findElement(CONTINUE_BUTTON).isDisplayed();
@@ -41,14 +43,14 @@ public class ForgotPasswordPage {
     }
 
     public void enterEmailCredential(final String email) {
-        driver.findElement(EMAIL_INPUT).sendKeys(email);
+        this.driver.findElement(EMAIL_INPUT).sendKeys(email);
     }
 
     public void clickContinueButton() {
-        driver.findElement(CONTINUE_BUTTON).click();
+        this.driver.findElement(CONTINUE_BUTTON).click();
     }
 
     public void continueByEnterKey() {
-        driver.findElement(EMAIL_INPUT).sendKeys(Keys.ENTER);
+        this.driver.findElement(EMAIL_INPUT).sendKeys(Keys.ENTER);
     }
 }

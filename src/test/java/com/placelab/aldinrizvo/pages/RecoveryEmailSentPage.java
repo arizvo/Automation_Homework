@@ -5,14 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 public class RecoveryEmailSentPage {
-    private final static By RECOVERY_EMAIL_SENT_HEADER = By.cssSelector("div#login > p.bold");
-    private final static By EMAIL_SENT_CONFIRMATION = By.xpath("//*[contains(text(),'Email sent.')]");
-    private final static By DIDNT_GET_EMAIL_LINK = By.cssSelector("div.small-headline > a.link-btn");
-    private final static String EXPECTED_HEADER_TEXT = "We have sent you a link to change your password";
-    private final static String EXPECTED_PAGE_TITLE = "PlaceLab";
-    private final static String EXPECTED_EMAIL_SENT_CONFIRMATION_TEXT = "Email sent. Didn't get it?";
+    private static final By RECOVERY_EMAIL_SENT_HEADER = By.cssSelector("div#login > p.bold");
+    private static final By EMAIL_SENT_CONFIRMATION = By.xpath("//*[contains(text(),'Email sent.')]");
+    private static final By DIDNT_GET_EMAIL_LINK = By.cssSelector("div.small-headline > a.link-btn");
+    private static final String EXPECTED_HEADER_TEXT = "We have sent you a link to change your password";
+    private static final String EXPECTED_PAGE_TITLE = "PlaceLab";
+    private static final String EXPECTED_EMAIL_SENT_CONFIRMATION_TEXT = "Email sent. Didn't get it?";
 
-    final private WebDriver driver;
+    private final WebDriver driver;
 
     public RecoveryEmailSentPage(final WebDriver driver) {
         this.driver = driver;

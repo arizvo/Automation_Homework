@@ -24,8 +24,8 @@ public class CreateSinglePlaceSearchReportSmokeTest {
     @Parameters("browser")
     @BeforeMethod(alwaysRun = true, groups = {"Positive", "Negative"})
     public void setup(final String browser) {
-        driver = WebDriverSetup.getWebDriver(browser);
-        driver.get("https://demo.placelab.com/");
+        this.driver = WebDriverSetup.getWebDriver(browser);
+        this.driver.get("https://demo.placelab.com/");
         this.loginPage = new LoginPage(driver);
         this.homepage = new Homepage(driver);
         this.createSinglePlaceSearchReportPage = new CreateSinglePlaceSearchReportPage(driver);
@@ -35,16 +35,16 @@ public class CreateSinglePlaceSearchReportSmokeTest {
     @Parameters({"email", "password"})
     @Test(priority = 1, groups = {"CreateSinglePlaceSearchReport", "Positive"})
     public void smokeTestCreateSinglePlaceSearchReport(final String email, final String password) {
-        loginPage.validateLoginPageContent();
-        loginPage.enterCredentials(email, password);
-        loginPage.clickSubmitLoginButton();
+        this.loginPage.validateLoginPageContent();
+        this.loginPage.enterCredentials(email, password);
+        this.loginPage.clickSubmitLoginButton();
 
         final String expectedRole = "Group Admin";
-        homepage.validateHomepageContent(expectedRole);
-        homepage.clickOnCreateReportDropdownMenu();
+        this.homepage.validateHomepageContent(expectedRole);
+        this.homepage.clickOnCreateReportDropdownMenu();
 
-        homepage.validateCreateReportDropdownMenu();
-        homepage.clickOnSinglePlaceSearchButton();
+        this.homepage.validateCreateReportDropdownMenu();
+        this.homepage.clickOnSinglePlaceSearchButton();
 
         Faker faker = new Faker();
         Random random = new Random();
@@ -56,18 +56,18 @@ public class CreateSinglePlaceSearchReportSmokeTest {
                 random.nextInt(100,9999) + "";
         final String address = faker.country().capital();
 
-        createSinglePlaceSearchReportPage.validateCreateSinglePlaceSearchReportPageContent();
-        createSinglePlaceSearchReportPage.fillAndSubmitSinglePlaceSearchReportForm(reportName, placeName, phoneNumber, address);
+        this.createSinglePlaceSearchReportPage.validateCreateSinglePlaceSearchReportPageContent();
+        this.createSinglePlaceSearchReportPage.fillAndSubmitSinglePlaceSearchReportForm(reportName, placeName, phoneNumber, address);
 
         final String reportID = createSinglePlaceSearchReportLoadingPage.getReportRequestID();
 
-        homepage.validateHomepageContent(expectedRole);
+        this.homepage.validateHomepageContent(expectedRole);
 
-        homepage.deleteTestData(reportID);
+        this.homepage.deleteTestData(reportID);
 
-        homepage.validateHomepageContent(expectedRole);
+        this.homepage.validateHomepageContent(expectedRole);
 
-        homepage.signOut();
+        this.homepage.signOut();
     }
 
     @AfterMethod(alwaysRun = true, groups = {"Positive", "Negative"})

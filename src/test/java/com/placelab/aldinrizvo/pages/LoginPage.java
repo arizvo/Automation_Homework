@@ -6,17 +6,17 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 public class LoginPage {
-    private final static By LOGIN_HEADER = By.cssSelector("div#login > p.headline");
-    private final static By LOGIN_FORM = By.id("login_form");
-    private final static By EMAIL_INPUT = By.id("email");
-    private final static By PASSWORD_INPUT = By.id("password");
-    private final static By LOGIN_BUTTON = By.xpath("//input[@type='submit']");
-    private final static By LOGIN_ERROR_MESSAGE = By.cssSelector("div.span12 > div.error-area");
-    private final static String EXPECTED_LOGIN_ERROR_MESSAGE = "Invalid credentials!";
-    private final static String EXPECTED_PAGE_TITLE = "PlaceLab";
-    private final static String EXPECTED_FORGOT_PASSWORD_MESSAGE = "Forgot your password?";
+    private static final By LOGIN_HEADER = By.cssSelector("div#login > p.headline");
+    private static final By LOGIN_FORM = By.id("login_form");
+    private static final By EMAIL_INPUT = By.id("email");
+    private static final By PASSWORD_INPUT = By.id("password");
+    private static final By LOGIN_BUTTON = By.xpath("//input[@type='submit']");
+    private static final By LOGIN_ERROR_MESSAGE = By.cssSelector("div.span12 > div.error-area");
+    private static final String EXPECTED_LOGIN_ERROR_MESSAGE = "Invalid credentials!";
+    private static final String EXPECTED_PAGE_TITLE = "PlaceLab";
+    private static final String EXPECTED_FORGOT_PASSWORD_MESSAGE = "Forgot your password?";
 
-    final private WebDriver driver;
+    private final WebDriver driver;
 
     public LoginPage(final WebDriver driver) {
         this.driver = driver;
@@ -29,13 +29,16 @@ public class LoginPage {
 
         Assert.assertEquals(actualPageTitle, EXPECTED_PAGE_TITLE);
         Assert.assertTrue(
-                driver.findElement(LOGIN_FORM).isDisplayed(), "Validate login form is displayed."
+                driver.findElement(LOGIN_FORM).isDisplayed(),
+                "Validate login form is displayed."
         );
         Assert.assertTrue(
-                driver.findElement(EMAIL_INPUT).isDisplayed(), "Validate email field is displayed."
+                driver.findElement(EMAIL_INPUT).isDisplayed(),
+                "Validate email field is displayed."
         );
         Assert.assertTrue(
-                driver.findElement(PASSWORD_INPUT).isDisplayed(), "Validate password field is displayed."
+                driver.findElement(PASSWORD_INPUT).isDisplayed(),
+                "Validate password field is displayed."
         );
 
         final boolean isForgotPasswordMessageDisplayed =
@@ -52,13 +55,14 @@ public class LoginPage {
                 driver.findElement(LOGIN_ERROR_MESSAGE).getText();
         Assert.assertEquals(actualInvalidCredentialsErrorMessage, EXPECTED_LOGIN_ERROR_MESSAGE);
         Assert.assertTrue(
-                driver.findElement(LOGIN_FORM).isDisplayed(), "Validate login form is displayed."
+                driver.findElement(LOGIN_FORM).isDisplayed(),
+                "Validate login form is displayed."
         );
     }
 
     public void enterCredentials(final String email, final String password) {
-        driver.findElement(EMAIL_INPUT).sendKeys(email);
-        driver.findElement(PASSWORD_INPUT).sendKeys(password);
+        this.driver.findElement(EMAIL_INPUT).sendKeys(email);
+        this.driver.findElement(PASSWORD_INPUT).sendKeys(password);
     }
 
     public void clickSubmitLoginButton() {

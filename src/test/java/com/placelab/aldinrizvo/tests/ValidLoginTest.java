@@ -3,9 +3,7 @@ package com.placelab.aldinrizvo.tests;
 import com.placelab.aldinrizvo.pages.Homepage;
 import com.placelab.aldinrizvo.pages.LoginPage;
 import com.placelab.aldinrizvo.utils.WebDriverSetup;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -17,10 +15,10 @@ public class ValidLoginTest {
     private Homepage homepage;
 
     @Parameters("browser")
-    @BeforeMethod(alwaysRun = true, groups = {"Positive", "Negative"})
+    @BeforeMethod(alwaysRun = true)
     public void setup(final String browser) {
-        driver = WebDriverSetup.getWebDriver(browser);
-        driver.get("https://demo.placelab.com/");
+        this.driver = WebDriverSetup.getWebDriver(browser);
+        this.driver.get("https://demo.placelab.com/");
         this.loginPage = new LoginPage(driver);
         this.homepage = new Homepage(driver);
     }
@@ -28,18 +26,18 @@ public class ValidLoginTest {
     @Parameters({"email", "password"})
     @Test(priority = 1, groups = {"ValidLogin", "Positive"})
     public void testValidLogin(final String email, final String password) {
-        loginPage.validateLoginPageContent();
-        loginPage.enterCredentials(email, password);
-        loginPage.clickSubmitLoginButton();
+        this.loginPage.validateLoginPageContent();
+        this.loginPage.enterCredentials(email, password);
+        this.loginPage.clickSubmitLoginButton();
 
         final String expectedRole = "Group Admin";
-        homepage.validateUserRole(expectedRole);
+        this.homepage.validateUserRole(expectedRole);
 
         // Logout
-        homepage.signOut();
+        this.homepage.signOut();
 
         // validate that user is signed out
-        loginPage.validateLoginPageContent();
+        this.loginPage.validateLoginPageContent();
     }
 
     @AfterMethod(alwaysRun = true, groups = {"Positive", "Negative"})

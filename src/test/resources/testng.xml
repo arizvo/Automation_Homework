@@ -6,7 +6,7 @@
             <class name="com.placelab.aldinrizvo.tests.ValidLoginTest" />
             <class name="com.placelab.aldinrizvo.tests.InvalidEmailLoginTest" />
             <class name="com.placelab.aldinrizvo.tests.InvalidPasswordLoginTest" />
-            <class name="com.placelab.aldinrizvo.tests.ValidLoginTestByPressingEnterKey" />
+            <class name="com.placelab.aldinrizvo.tests.ValidLoginByPressingEnterKeyTest" />
             <class name="com.placelab.aldinrizvo.tests.RestorePasswordTest" />
             <class name="com.placelab.aldinrizvo.tests.CreateSinglePlaceSearchReportSmokeTest" />
         </classes>

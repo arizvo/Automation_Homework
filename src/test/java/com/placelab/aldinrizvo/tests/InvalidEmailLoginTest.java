@@ -1,79 +1,41 @@
 package com.placelab.aldinrizvo.tests;
 
+import com.placelab.aldinrizvo.pages.LoginPage;
 import com.placelab.aldinrizvo.utils.WebDriverSetup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.util.UUID;
+
 public class InvalidEmailLoginTest {
     private WebDriver driver;
+    private LoginPage loginPage;
+
+    final private String invalidEmail = UUID.randomUUID().toString();
 
     @Parameters("browser")
-    @BeforeTest
+    @BeforeMethod(alwaysRun = true, groups = {"Positive", "Negative"})
     public void setup(final String browser) {
         driver = WebDriverSetup.getWebDriver(browser);
         driver.get("https://demo.placelab.com/");
+        this.loginPage = new LoginPage(driver);
     }
 
     @Parameters("password")
-    @Test
+    @Test(priority = 3, groups = {"InvalidEmailLogin", "Negative"})
     public void testInvalidEmailLogin(final String password) {
-        // validate page title is correct
-        final String actualPageTitle = driver.getTitle();
-        final String expectedPageTitle = "PlaceLab";
-        Assert.assertEquals(actualPageTitle, expectedPageTitle);
-
-        // validate header is displayed
-        final boolean isHeaderDisplayed = driver.findElement(By.cssSelector("div#login > p.headline")).isDisplayed();
-        Assert.assertTrue(isHeaderDisplayed);
-
-        // Validate login form is displayed
-        Assert.assertTrue(
-                driver.findElement(By.id("login_form")).isDisplayed(), "Validate login form is displayed."
-        );
-        Assert.assertTrue(
-                driver.findElement(By.id("email")).isDisplayed(), "Validate email field is displayed."
-        );
-        Assert.assertTrue(
-                driver.findElement(By.id("password")).isDisplayed(), "Validate password field is displayed."
-        );
-
-        // Enter email
-        driver.findElement(By.id("email")).sendKeys("abcd_efgh@gmail.com");
-
-        // Enter password
-        driver.findElement(By.id("password")).sendKeys(password);
-
-        // Submit
-        driver.findElement(By.xpath("//input[@name='commit']")).click();
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Validate that error message is showed
-        final String expectedInvalidCredentialsErrorMessage = "Invalid credentials!";
-        final String actualInvalidCredentialsErrorMessage =
-                driver.findElement(By.cssSelector("div.span12 > div.error-area")).getText();
-        Assert.assertEquals(actualInvalidCredentialsErrorMessage, expectedInvalidCredentialsErrorMessage);
-        Assert.assertTrue(
-                driver.findElement(By.id("login_form")).isDisplayed(), "Validate login form is displayed."
-        );
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        loginPage.validateLoginPageContent();
+        loginPage.enterCredentials(invalidEmail, password);
+        loginPage.clickSubmitLoginButton();
+        loginPage.validateLoginErrorMessage();
     }
 
-    @AfterTest
+    @AfterMethod(alwaysRun = true, groups = {"Positive", "Negative"})
     public void teardown() {
         driver.close();
     }

@@ -1,83 +1,47 @@
 package com.placelab.aldinrizvo.tests;
 
+import com.placelab.aldinrizvo.pages.ForgotPasswordPage;
+import com.placelab.aldinrizvo.pages.LoginPage;
+import com.placelab.aldinrizvo.pages.RecoveryEmailSentPage;
 import com.placelab.aldinrizvo.utils.WebDriverSetup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class RestorePasswordTest {
     private WebDriver driver;
+    private LoginPage loginPage;
+    private ForgotPasswordPage forgotPasswordPage;
+    private RecoveryEmailSentPage recoveryEmailSentPage;
 
     @Parameters("browser")
-    @BeforeTest
+    @BeforeMethod(alwaysRun = true, groups = {"Positive", "Negative"})
     public void setup(final String browser) {
         driver = WebDriverSetup.getWebDriver(browser);
         driver.get("https://demo.placelab.com/");
+        this.loginPage = new LoginPage(driver);
+        this.forgotPasswordPage = new ForgotPasswordPage(driver);
+        this.recoveryEmailSentPage = new RecoveryEmailSentPage(driver);
     }
 
     @Parameters("email")
-    @Test
+    @Test(priority = 5, groups = {"PasswordRestore", "Positive"})
     public void testPasswordRestore(final String email) {
-        // Validate page title is correct
-        final String actualPageTitle = driver.getTitle();
-        final String expectedPageTitle = "PlaceLab";
-        Assert.assertEquals(actualPageTitle, expectedPageTitle);
+        loginPage.validateLoginPageContent();
+        loginPage.clickForgotPasswordLink();
 
-        // Validate header is displayed
-        final boolean isHeaderDisplayed = driver.findElement(By.cssSelector("div#login > p.headline")).isDisplayed();
-        Assert.assertTrue(isHeaderDisplayed);
+        forgotPasswordPage.validateForgotPasswordPageContent();
+        forgotPasswordPage.enterEmailCredential(email);
+        forgotPasswordPage.clickContinueButton();
 
-        // Validate login form is displayed
-        Assert.assertTrue(
-                driver.findElement(By.id("login_form")).isDisplayed(), "Validate login form is displayed."
-        );
-        Assert.assertTrue(
-                driver.findElement(By.id("email")).isDisplayed(), "Validate email field is displayed."
-        );
-        Assert.assertTrue(
-                driver.findElement(By.id("password")).isDisplayed(), "Validate password field is displayed."
-        );
-
-        // Validate that link for restoring forgotten password is displayed
-        driver.findElement(By.xpath("//a[@href ='/password/forgot']")).click();
-
-        // Validate email field is displayed
-        Assert.assertTrue(
-                driver.findElement(By.id("login_form")).isDisplayed(), "Validate login form is displayed"
-        );
-        Assert.assertTrue(
-                driver.findElement(By.id("email")).isDisplayed(), "Validate email field is displayed"
-        );
-
-        // Enter valid email
-        driver.findElement(By.id("email")).sendKeys(email);
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Submit
-        driver.findElement(By.xpath("//input[@name='commit']")).click();
-
-        // Validate email with password reset instructions is sent
-        final String expectedEmailSentMessage = "We have sent you a link to change your password";
-        final String actualEmailSentMessage = driver.findElement(By.cssSelector("div#login > p.bold")).getText();
-        Assert.assertEquals(actualEmailSentMessage, expectedEmailSentMessage);
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        recoveryEmailSentPage.validateRecoveryEmailSentPageContent();
     }
 
-    @AfterTest
+    @AfterMethod(alwaysRun = true, groups = {"Positive", "Negative"})
     public void teardown() {
         driver.close();
     }

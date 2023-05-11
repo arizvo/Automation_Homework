@@ -8,6 +8,7 @@
             <class name="com.placelab.aldinrizvo.tests.InvalidPasswordLoginTest" />
             <class name="com.placelab.aldinrizvo.tests.ValidLoginTestByPressingEnterKey" />
             <class name="com.placelab.aldinrizvo.tests.RestorePasswordTest" />
+            <class name="com.placelab.aldinrizvo.tests.CreateSinglePlaceSearchReportSmokeTest" />
         </classes>
     </test>
 </suite>

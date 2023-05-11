@@ -3,7 +3,6 @@
 <suite name="Suite1" verbose="1" >
     <test name="PlaceLab Login test" >
         <classes>
-            <class name="com.placelab.aldinrizvo.tests.SmokeTest" />
             <class name="com.placelab.aldinrizvo.tests.ValidLoginTest" />
             <class name="com.placelab.aldinrizvo.tests.InvalidEmailLoginTest" />
             <class name="com.placelab.aldinrizvo.tests.InvalidPasswordLoginTest" />

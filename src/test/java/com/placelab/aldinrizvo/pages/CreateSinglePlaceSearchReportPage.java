@@ -93,11 +93,7 @@ public class CreateSinglePlaceSearchReportPage {
 
         this.driver.findElement(CREATE_REPORT_BUTTON).click();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        this.driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
     }
 
     private By getRandomCategoryForSinglePlaceSearch() {
